@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import com.example.constant.ProductCategory;
 import com.example.dto.ProductRequest;
 import com.example.model.Product;
 
@@ -17,5 +18,5 @@ public interface ProductService {
 
 	void deleteProductById(Integer productId);
 
-	List<Product> getProducts();
+	List<Product> getProducts(ProductCategory category, String search);
 }

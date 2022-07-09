@@ -67,7 +67,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</delete>
 	
 	
-	<!-- List<Product> getProducts(); -->
+	<!-- List<Product> getProducts(ProductCategory category, @Param("search") String search); -->
 	<select id="getProducts" resultType="Product">
 		SELECT
 		  `product_id`,
@@ -80,7 +80,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		  `created_date`,
 		  `last_modified_date`
 		FROM
-  			`mall`.`product`;
+  			`mall`.`product`
+  		WHERE 1 = 1
+  		<if test="category != null">
+  			AND `category` = #{category}
+  		</if>
+  		<if test="search != null">
+  			AND `product_name` like "%"#{search}"%"
+  		</if>;
 	</select>
 	
 </mapper>

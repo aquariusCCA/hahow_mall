@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.constant.ProductCategory;
 import com.example.dto.ProductRequest;
 import com.example.mapper.ProductMapper;
 import com.example.model.Product;
@@ -49,9 +50,9 @@ public class ProductServiceImpl implements ProductService{
 
 
 	@Override
-	public List<Product> getProducts() {
+	public List<Product> getProducts(ProductCategory category, String search) {
 		// TODO Auto-generated method stub
-		return productMapper.getProducts();
+		return productMapper.getProducts(category, search);
 	}
 
 }

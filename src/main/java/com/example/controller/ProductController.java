@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.constant.ProductCategory;
 import com.example.dto.ProductRequest;
 import com.example.model.Product;
 import com.example.service.ProductService;
@@ -27,12 +29,17 @@ public class ProductController {
 	
 	// 查詢商品列表
 	@GetMapping("/products")
-	public ResponseEntity<List<Product>> getProducts(){
-		List<Product> productList = productService.getProducts();
+	public ResponseEntity<List<Product>> getProducts(
+			@RequestParam(required = false) ProductCategory category,
+			@RequestParam(required = false) String search
+	){
+		List<Product> productList = productService.getProducts(category, search);
 
 		return ResponseEntity.status(HttpStatus.OK).body(productList);
 	}
 
+	
+	
 	// 根據編號查詢商品
 	@GetMapping("/products/{productId}")
 	public ResponseEntity<Product> getProduct(@PathVariable Integer productId) {

@@ -7,8 +7,3 @@
 # 時間撮
 <img width="698" alt="image" src="https://user-images.githubusercontent.com/108846887/178098546-a6af5678-6487-4f4c-9621-f4a84e7c696c.png">
 
-
-# 用來測試的
-
-測試文字
-	

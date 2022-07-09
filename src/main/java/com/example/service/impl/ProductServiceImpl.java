@@ -30,4 +30,12 @@ public class ProductServiceImpl implements ProductService{
 		return productMapper.createProduct(productRequest);
 	}
 
+
+	@Transactional
+	@Override
+	public void updateProduct(Integer productId, ProductRequest productRequest) {
+		// TODO Auto-generated method stub
+		productMapper.updateProduct(productId, productRequest);
+	}
+
 }

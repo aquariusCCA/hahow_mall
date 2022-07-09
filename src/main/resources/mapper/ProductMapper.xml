@@ -41,4 +41,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		    #{description}
   		);
 	</insert>
+	
+	
+	<!-- void updateProduct(@Param("productId") Integer productId, ProductRequest productRequest); -->
+	<update id="updateProduct">
+		UPDATE
+  			`mall`.`product`
+		SET
+		  `product_name` = #{productRequest.productName},
+		  `category` = #{productRequest.category},
+		  `image_url` = #{productRequest.imageUrl},
+		  `price` = #{productRequest.price},
+		  `stock` = #{productRequest.stock},
+		  `description` = #{productRequest.description}
+		WHERE `product_id` = #{productId};
+	</update>
+	
 </mapper>

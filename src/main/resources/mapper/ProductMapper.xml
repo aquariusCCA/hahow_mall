@@ -87,7 +87,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   		</if>
   		<if test="search != null">
   			AND `product_name` like "%"#{search}"%"
-  		</if>;
+  		</if>
+  		ORDER BY ${orderBy} ${sort};
 	</select>
 	
 </mapper>

@@ -67,7 +67,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</delete>
 	
 	
-	<!-- List<Product> getProducts(ProductCategory category, @Param("search") String search); -->
+	<!-- List<Product> getProducts(ProductQueryParams productQueryParams); -->
 	<select id="getProducts" resultType="Product">
 		SELECT
 		  `product_id`,

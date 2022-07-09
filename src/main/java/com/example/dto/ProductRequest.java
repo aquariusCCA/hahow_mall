@@ -4,6 +4,7 @@ import javax.validation.constraints.NotNull;
 
 import com.example.constant.ProductCategory;
 
+// 當需要新增或修改時，用來作數據校驗的
 public class ProductRequest {
 	
 	private Integer productId;

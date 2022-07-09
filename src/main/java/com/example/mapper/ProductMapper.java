@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import com.example.constant.ProductCategory;
+import com.example.dto.ProductQueryParams;
 import com.example.dto.ProductRequest;
 import com.example.model.Product;
 
@@ -21,5 +22,5 @@ public interface ProductMapper {
 
 	void deleteProductById(Integer productId);
 
-	List<Product> getProducts(ProductCategory category, @Param("search") String search);
+	List<Product> getProducts(ProductQueryParams productQueryParams);
 }

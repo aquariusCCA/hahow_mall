@@ -38,4 +38,11 @@ public class ProductServiceImpl implements ProductService{
 		productMapper.updateProduct(productId, productRequest);
 	}
 
+
+	@Override
+	public void deleteProductById(Integer productId) {
+		// TODO Auto-generated method stub
+		productMapper.deleteProductById(productId);
+	}
+
 }

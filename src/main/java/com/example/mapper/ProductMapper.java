@@ -15,4 +15,6 @@ public interface ProductMapper {
 	Integer createProduct(ProductRequest productRequest);
 
 	void updateProduct(@Param("productId") Integer productId, ProductRequest productRequest);
+
+	void deleteProductById(Integer productId);
 }

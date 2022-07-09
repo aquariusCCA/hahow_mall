@@ -1,12 +1,17 @@
 package com.example.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.dto.ProductRequest;
 import com.example.model.Product;
 import com.example.service.ProductService;
 
@@ -16,6 +21,7 @@ public class ProductController {
 	@Autowired
 	private ProductService productService;
 	
+	//根據編號查詢商品
 	@GetMapping("/products/{productId}")
 	public ResponseEntity<Product> getProduct(@PathVariable Integer productId){
 		Product product = productService.getProductById(productId);
@@ -25,5 +31,22 @@ public class ProductController {
 		}else {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
+	}
+	
+	
+	// 新增商品
+	@PostMapping("/products")
+	public ResponseEntity<Product> createProduct(@RequestBody @Valid ProductRequest productRequest){
+		// 執行新增商品
+		productService.createProduct(productRequest);
+		
+		// 獲取剛剛新增的商品的編號
+		Integer productId = productRequest.getProductId();
+
+		// 獲取剛剛新增的商品
+		Product product = productService.getProductById(productId);
+
+		// 回傳
+		return ResponseEntity.status(HttpStatus.CREATED).body(product);
 	}
 }

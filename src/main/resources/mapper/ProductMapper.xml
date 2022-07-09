@@ -67,4 +67,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</delete>
 	
 	
+	<!-- List<Product> getProducts(); -->
+	<select id="getProducts" resultType="Product">
+		SELECT
+		  `product_id`,
+		  `product_name`,
+		  `category`,
+		  `image_url`,
+		  `price`,
+		  `stock`,
+		  `description`,
+		  `created_date`,
+		  `last_modified_date`
+		FROM
+  			`mall`.`product`;
+	</select>
+	
 </mapper>

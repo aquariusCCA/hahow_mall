@@ -1,5 +1,7 @@
 package com.example.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,6 +45,13 @@ public class ProductServiceImpl implements ProductService{
 	public void deleteProductById(Integer productId) {
 		// TODO Auto-generated method stub
 		productMapper.deleteProductById(productId);
+	}
+
+
+	@Override
+	public List<Product> getProducts() {
+		// TODO Auto-generated method stub
+		return productMapper.getProducts();
 	}
 
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.DigestUtils;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.example.dto.UserLoginRequest;
@@ -33,6 +34,10 @@ public class UserServiceImpl implements UserService {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
 		}
 		
+		// 使用 MD5 生成密碼的雜湊值
+		String hashedPassword = DigestUtils.md5DigestAsHex(userRegisterRequest.getPassword().getBytes());
+		userRegisterRequest.setPassword(hashedPassword);
+		
 		// 創建帳號
 		return userMapper.createUser(userRegisterRequest);
 	}
@@ -50,12 +55,18 @@ public class UserServiceImpl implements UserService {
 	public User login(UserLoginRequest userLoginRequest) {
 		User user = userMapper.getUserByEmail(userLoginRequest.getEmail());
 
+		// 檢查 user 是否存在
 		if(user == null){
 			log.warn("該 Email {} 尚未註冊", userLoginRequest.getEmail());
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
 		}
 
-		if(user.getPassword().equals(userLoginRequest.getPassword())){
+		// 使用 MD5 生成密碼的雜湊值
+		String hashedPassword = DigestUtils.md5DigestAsHex(userLoginRequest.getPassword().getBytes());
+		
+		
+		// 檢查密碼，比較兩者的雜奏值
+		if(user.getPassword().equals(hashedPassword)){
 			return user;
 		}else{
 			log.warn("email {} 的密碼不正確", userLoginRequest.getEmail());

@@ -2,10 +2,18 @@ package com.example.model;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class User {
 	private Integer userId;
+	
+	@JsonProperty("e_mail") // 指定返回 json 的 key 名稱
 	private String email;
+	
+	@JsonIgnore // 返回的 json 數據中不包含 password 屬性
 	private String password;
+	
 	private Date createdDate;
 	private Date lastModifiedDate;
 	public Integer getUserId() {

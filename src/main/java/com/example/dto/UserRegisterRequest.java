@@ -1,5 +1,6 @@
 package com.example.dto;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
@@ -8,6 +9,7 @@ public class UserRegisterRequest {
 	private Integer userId;
 
 	@NotBlank
+	@Email
 	private String email;
 	
 	@NotBlank

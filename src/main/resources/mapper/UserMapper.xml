@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.UserMapper">
+
+	<!-- User getUserById(Integer userId); -->
+	<select id="getUserById" resultType="User">
+		SELECT
+		  `user_id`,
+		  `email`,
+		  `password`,
+		  `created_date`,
+		  `last_modified_date`
+		FROM
+  			`mall`.`user`
+		WHERE `user_id` = #{userId};
+	</select>
+	
+
+	<!-- Integer createUser(UserRegisterRequest userRegisterRequest); -->
+	<insert id="createUser" useGeneratedKeys="true" keyProperty="userId">
+		INSERT INTO `mall`.`user` (
+		  `email`,
+		  `password`
+		)
+		VALUES(
+		    #{email},
+		    #{password}
+  		);
+	</insert>
+</mapper>

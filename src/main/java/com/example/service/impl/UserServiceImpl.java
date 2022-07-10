@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.example.dto.UserLoginRequest;
 import com.example.dto.UserRegisterRequest;
 import com.example.mapper.UserMapper;
 import com.example.model.User;
@@ -42,5 +43,23 @@ public class UserServiceImpl implements UserService {
 	public User getUserById(Integer userId) {
 		// TODO Auto-generated method stub
 		return userMapper.getUserById(userId);
+	}
+
+
+	@Override
+	public User login(UserLoginRequest userLoginRequest) {
+		User user = userMapper.getUserByEmail(userLoginRequest.getEmail());
+
+		if(user == null){
+			log.warn("該 Email {} 尚未註冊", userLoginRequest.getEmail());
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+		}
+
+		if(user.getPassword().equals(userLoginRequest.getPassword())){
+			return user;
+		}else{
+			log.warn("email {} 的密碼不正確", userLoginRequest.getEmail());
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+		}
 	}
 }

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.dto.UserLoginRequest;
 import com.example.dto.UserRegisterRequest;
 import com.example.model.User;
 import com.example.service.UserService;
@@ -18,6 +19,15 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
+	
+	// 因為要保護資料，所以我們選擇 POST
+	@PostMapping("/users/login")
+	public ResponseEntity<User> login(@RequestBody @Valid UserLoginRequest userLoginRequest){
+		User user = userService.login(userLoginRequest);
+
+		return ResponseEntity.status(HttpStatus.OK).body(user);		
+	}
+	
 	
 	/*
 	register 方法選擇 POST 的兩個理由

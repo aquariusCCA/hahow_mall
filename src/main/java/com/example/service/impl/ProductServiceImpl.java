@@ -56,4 +56,11 @@ public class ProductServiceImpl implements ProductService{
 		return productMapper.getProducts(productQueryParams);
 	}
 
+
+	@Override
+	public Integer countProduct(ProductQueryParams productQueryParams) {
+		// TODO Auto-generated method stub
+		return productMapper.countProduct(productQueryParams);
+	}
+
 }

@@ -24,6 +24,7 @@ import com.example.dto.ProductQueryParams;
 import com.example.dto.ProductRequest;
 import com.example.model.Product;
 import com.example.service.ProductService;
+import com.example.utl.Page;
 
 @Validated // 必須加上這個註解下面的 @Max 和 @Min 才會生效
 @RestController
@@ -34,7 +35,7 @@ public class ProductController {
 	
 	// 查詢商品列表
 	@GetMapping("/products")
-	public ResponseEntity<List<Product>> getProducts(
+	public ResponseEntity<Page<Product>> getProducts(
 			// 查詢條件
 			@RequestParam(required = false) ProductCategory category,
 			@RequestParam(required = false) String search,
@@ -56,9 +57,20 @@ public class ProductController {
 		productQueryParams.setOffset(offset);
 		System.out.println(productQueryParams);
 		
+		// 取得 product List
 		List<Product> productList = productService.getProducts(productQueryParams);
 
-		return ResponseEntity.status(HttpStatus.OK).body(productList);
+		// 取得 product 總數
+		Integer total = productService.countProduct(productQueryParams);
+		
+		// 分頁
+		Page<Product> page = new Page<Product>();
+		page.setLimit(limit);
+		page.setOffset(offset);
+		page.setTotal(total);
+		page.setResults(productList);
+
+		return ResponseEntity.status(HttpStatus.OK).body(page);
 	}
 
 	

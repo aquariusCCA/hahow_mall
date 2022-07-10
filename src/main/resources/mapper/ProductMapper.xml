@@ -88,10 +88,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			AND `category` = #{category}
 		</if>
 		<if test="search != null">
-			AND `product_name` LIKE "%"#{search}"%"
+			AND `product_name` LIKE "%" #{search} "%"
 		</if>
 		ORDER BY ${orderBy} ${sort}
 		LIMIT ${offset}, ${limit};
+	</select>
+	
+	
+	<!-- Integer countProduct(ProductQueryParams productQueryParams); -->
+	<select id="countProduct" resultType="_int">
+		SELECT
+			count(*)
+		FROM
+			`mall`.`product`
+		WHERE 1 = 1
+		<if test="category != null">
+			AND `category` = #{category}
+		</if>
+		<if test="search != null">
+			AND `product_name` LIKE "%" #{search} "%"
+		</if>
 	</select>
 
 </mapper>

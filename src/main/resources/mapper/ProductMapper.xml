@@ -84,12 +84,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM
 		`mall`.`product`
 		WHERE 1 = 1
-		<if test="category != null">
-			AND `category` = #{category}
-		</if>
-		<if test="search != null">
-			AND `product_name` LIKE "%" #{search} "%"
-		</if>
+		<include refid="addFilteringSql"></include>
 		ORDER BY ${orderBy} ${sort}
 		LIMIT ${offset}, ${limit};
 	</select>
@@ -102,12 +97,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM
 			`mall`.`product`
 		WHERE 1 = 1
+		<include refid="addFilteringSql"></include>		
+	</select>
+	
+	<!-- 可重用的 sql 片段 -->
+	<sql id="addFilteringSql">
 		<if test="category != null">
 			AND `category` = #{category}
 		</if>
 		<if test="search != null">
 			AND `product_name` LIKE "%" #{search} "%"
 		</if>
-	</select>
+	</sql>
 
 </mapper>

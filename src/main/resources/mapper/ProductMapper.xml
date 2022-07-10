@@ -7,88 +7,91 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- Product getProductById(Integer id); -->
 	<select id="getProductById" resultType="Product">
 		SELECT
-		  `product_id`,
-		  `product_name`,
-		  `category`,
-		  `image_url`,
-		  `price`,
-		  `stock`,
-		  `description`,
-		  `created_date`,
-		  `last_modified_date`
+		`product_id`,
+		`product_name`,
+		`category`,
+		`image_url`,
+		`price`,
+		`stock`,
+		`description`,
+		`created_date`,
+		`last_modified_date`
 		FROM
-		  `mall`.`product`
-		WHERE 
-		  `product_id` = #{id};
+		`mall`.`product`
+		WHERE
+		`product_id` = #{id};
 	</select>
 
-	<!-- Integer createProduct(ProductRequest productRequest); -->	
-	<insert id="createProduct" useGeneratedKeys="true" keyProperty="productId">
+	<!-- Integer createProduct(ProductRequest productRequest); -->
+	<insert id="createProduct" useGeneratedKeys="true"
+		keyProperty="productId">
 		INSERT INTO `mall`.`product` (
-		  `product_name`,
-		  `category`,
-		  `image_url`,
-		  `price`,
-		  `stock`,
-		  `description`
+		`product_name`,
+		`category`,
+		`image_url`,
+		`price`,
+		`stock`,
+		`description`
 		)
 		VALUES(
-		    #{productName},
-		    #{category},
-		    #{imageUrl},
-		    #{price},
-		    #{stock},
-		    #{description}
-  		);
+		#{productName},
+		#{category},
+		#{imageUrl},
+		#{price},
+		#{stock},
+		#{description}
+		);
 	</insert>
-	
-	
-	<!-- void updateProduct(@Param("productId") Integer productId, ProductRequest productRequest); -->
+
+
+	<!-- void updateProduct(@Param("productId") Integer productId, ProductRequest 
+		productRequest); -->
 	<update id="updateProduct">
 		UPDATE
-  			`mall`.`product`
+		`mall`.`product`
 		SET
-		  `product_name` = #{productRequest.productName},
-		  `category` = #{productRequest.category},
-		  `image_url` = #{productRequest.imageUrl},
-		  `price` = #{productRequest.price},
-		  `stock` = #{productRequest.stock},
-		  `description` = #{productRequest.description}
+		`product_name` = #{productRequest.productName},
+		`category` = #{productRequest.category},
+		`image_url` = #{productRequest.imageUrl},
+		`price` = #{productRequest.price},
+		`stock` = #{productRequest.stock},
+		`description` = #{productRequest.description}
 		WHERE `product_id` = #{productId};
 	</update>
-	
-	
+
+
 	<!-- void deleteProductById(Integer productId); -->
 	<delete id="deleteProductById">
 		DELETE
 		FROM
-  			`mall`.`product`
+		`mall`.`product`
 		WHERE `product_id` = #{productId};
 	</delete>
-	
-	
+
+
 	<!-- List<Product> getProducts(ProductQueryParams productQueryParams); -->
 	<select id="getProducts" resultType="Product">
 		SELECT
-		  `product_id`,
-		  `product_name`,
-		  `category`,
-		  `image_url`,
-		  `price`,
-		  `stock`,
-		  `description`,
-		  `created_date`,
-		  `last_modified_date`
+		`product_id`,
+		`product_name`,
+		`category`,
+		`image_url`,
+		`price`,
+		`stock`,
+		`description`,
+		`created_date`,
+		`last_modified_date`
 		FROM
-  			`mall`.`product`
-  		WHERE 1 = 1
-  		<if test="category != null">
-  			AND `category` = #{category}
-  		</if>
-  		<if test="search != null">
-  			AND `product_name` like "%"#{search}"%"
-  		</if>
-  		ORDER BY ${orderBy} ${sort};
+		`mall`.`product`
+		WHERE 1 = 1
+		<if test="category != null">
+			AND `category` = #{category}
+		</if>
+		<if test="search != null">
+			AND `product_name` LIKE "%"#{search}"%"
+		</if>
+		ORDER BY ${orderBy} ${sort}
+		LIMIT ${offset}, ${limit};
 	</select>
-	
+
 </mapper>

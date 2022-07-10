@@ -3,10 +3,13 @@ package com.example.controller;
 import java.util.List;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +25,7 @@ import com.example.dto.ProductRequest;
 import com.example.model.Product;
 import com.example.service.ProductService;
 
+@Validated // 必須加上這個註解下面的 @Max 和 @Min 才會生效
 @RestController
 public class ProductController {
 
@@ -37,13 +41,19 @@ public class ProductController {
 			
 			// 排序條件
 			@RequestParam(defaultValue = "created_date") String orderBy,
-			@RequestParam(defaultValue = "decs") String sort
+			@RequestParam(defaultValue = "DESC") String sort,
+			
+			//分頁
+			@RequestParam(defaultValue = "5") @Max(1000) @Min(0) Integer limit, // 數據筆數最大不可以超過 1000，最小不可以小於 0
+			@RequestParam(defaultValue = "0") @Min(0) Integer offset
 	){
 		ProductQueryParams productQueryParams = new ProductQueryParams();
 		productQueryParams.setCategory(category);
 		productQueryParams.setSearch(search);
 		productQueryParams.setOrderBy(orderBy);
 		productQueryParams.setSort(sort);
+		productQueryParams.setLimit(limit);
+		productQueryParams.setOffset(offset);
 		System.out.println(productQueryParams);
 		
 		List<Product> productList = productService.getProducts(productQueryParams);

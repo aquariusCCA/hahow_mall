@@ -14,6 +14,7 @@ import org.springframework.web.server.ResponseStatusException;
 import com.example.dto.BuyItem;
 import com.example.dto.CreateOrderRequest;
 import com.example.dto.OrderMapperParams;
+import com.example.dto.OrderQueryParams;
 import com.example.mapper.OrderMapper;
 import com.example.mapper.ProductMapper;
 import com.example.mapper.UserMapper;
@@ -111,5 +112,30 @@ public class OrderServiceImpl implements OrderService {
         order.setOrderItemList(orderItemList);
 
         return order;
+	}
+
+
+
+	@Override
+	public List<Order> getOrders(OrderQueryParams orderQueryParams) {
+		// 查出該用戶的所有訂單
+        List<Order> orderList = orderMapper.getOrders(orderQueryParams);
+
+        // 將每筆訂單的訂單項給設置好
+        for (Order order : orderList) {
+            List<OrderItem> orderItemList = orderMapper.getOrderItemsByOrderId(order.getOrderId());
+
+            order.setOrderItemList(orderItemList);
+        }
+
+        return orderList;
+	}
+
+
+
+	@Override
+	public Integer countOrder(OrderQueryParams orderQueryParams) {
+		// TODO Auto-generated method stub
+		return orderMapper.countOrder(orderQueryParams);
 	}
 }

@@ -36,20 +36,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<insert id="createProduct" useGeneratedKeys="true"
 		keyProperty="productId">
 		INSERT INTO `mall`.`product` (
-		`product_name`,
-		`category`,
-		`image_url`,
-		`price`,
-		`stock`,
-		`description`
+			`product_name`,
+			`category`,
+			`image_url`,
+			`price`,
+			`stock`,
+			`description`
 		)
 		VALUES(
-		#{productName},
-		#{category},
-		#{imageUrl},
-		#{price},
-		#{stock},
-		#{description}
+			#{productName},
+			#{category},
+			#{imageUrl},
+			#{price},
+			#{stock},
+			#{description}
 		);
 	</insert>
 

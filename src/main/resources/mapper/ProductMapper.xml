@@ -4,6 +4,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.mapper.ProductMapper">
 
+	<!-- void updateStock(@Param("productId") Integer productId, @Param("stock") Integer stock); -->
+	<update id="updateStock">
+		UPDATE
+  			`mall`.`product`
+		SET
+  			`stock` = #{stock}
+		WHERE `product_id` = #{productId};
+	</update>
+	
+
 	<!-- Product getProductById(Integer id); -->
 	<select id="getProductById" resultType="Product">
 		SELECT

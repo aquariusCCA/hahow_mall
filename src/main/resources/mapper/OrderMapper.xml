@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.OrderMapper">
+
+	<!-- List<OrderItem> getOrderItemsByOrderId(Integer orderId); -->
+	<select id="getOrderItemsByOrderId" resultType="OrderItem">
+		SELECT
+		  `order_item_id`,
+		  `order_id`,
+		  `product_id`,
+		  `quantity`,
+		  `amount`
+		FROM
+  			`mall`.`order_item`
+		WHERE `order_id` = #{orderId};
+	</select>
+	
+
+	<!-- Order getOrderById(Integer orderId); -->
+	<select id="getOrderById" resultType="Order">
+		SELECT
+		  `order_id`,
+		  `user_id`,
+		  `total_amount`,
+		  `created_date`,
+		  `last_modified_date`
+		FROM
+  			`mall`.`order`
+		WHERE `order_id` = #{orderId};
+	</select>
+	
+
+	<!-- void createOrderItems(@Param("orderId") Integer orderId, @Param("orderItemList") List<OrderItem> orderItemList); -->
+	<insert id="createOrderItems">
+		INSERT INTO `mall`.`order_item` (
+		  `order_id`,
+		  `product_id`,
+		  `quantity`,
+		  `amount`
+		)
+		VALUES
+		<foreach collection="orderItemList" item="orderItem" separator=",">
+			(
+			    #{orderId},
+			    #{orderItem.productId},
+			    #{orderItem.quantity},
+			    #{orderItem.amount}
+	  		)
+		</foreach>;
+	</insert>
+	
+
+	<!-- Integer createOrder(OrderMapperParams orderMapperParams); -->
+	<insert id="createOrder" useGeneratedKeys="true" keyProperty="orderId">
+		INSERT INTO `mall`.`order` (
+		  `user_id`,
+		  `total_amount`
+		)
+		VALUES (
+		    #{userId},
+		    #{totalAmount}
+  		);
+	</insert>
+	
+</mapper>

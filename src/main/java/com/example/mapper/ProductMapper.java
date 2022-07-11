@@ -25,4 +25,6 @@ public interface ProductMapper {
 	List<Product> getProducts(ProductQueryParams productQueryParams);
 
 	Integer countProduct(ProductQueryParams productQueryParams);
+
+	void updateStock(@Param("productId") Integer productId, @Param("stock") Integer stock);
 }
